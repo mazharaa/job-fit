@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Check, LoaderCircle } from "lucide-react";
 import { useRealtimeRun } from "@trigger.dev/react-hooks";
+import { redirect } from "next/navigation";
 
 export function ProcessingPage({ runId, publicAccessToken }) {
   const { run, error } = useRealtimeRun(runId, {
@@ -22,6 +23,11 @@ export function ProcessingPage({ runId, publicAccessToken }) {
         <p className="text-gray-500">Memulai proses...</p>
       </main>
     );
+  }
+
+  if (run?.output?.jobOpeningId) {
+    console.log("Job Opening ID:", run.output.jobOpeningId);
+    redirect(`/job/analyzing/result/${run.output.jobOpeningId}`);
   }
 
   const status = run.metadata?.status;

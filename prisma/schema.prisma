@@ -45,7 +45,7 @@ model JobOpening {
   jobRequirements  String[]       
   credibilityLabel String           @db.VarChar(255)
   credibilityScore Float            @db.DoublePrecision
-  reasoningPoint   Json             @db.JsonB
+  reasoningPoint   String[]
   createdAt        DateTime         @default(now())
   matches          CVJobMatch[]
 }

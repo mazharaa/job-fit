@@ -22,13 +22,7 @@ export const generateCredibilityTask = task({
       credibility: z.object({
         credibilityLabel: z.enum(["KREDIBEL", "MERAGUKAN", "PENIPUAN"]),
         credibilityScore: z.number().min(0).max(100),
-        reasoningPoint: z.object({
-          companyIdentity: z.array(z.string()),
-          jobDescription: z.array(z.string()),
-          languageStyle: z.array(z.string()),
-          redFlags: z.array(z.string()),
-          platformSources: z.array(z.string()),
-        }),
+        reasoningPoint: z.array(z.string()),
       }),
       assessmentSummary: z.string(),
     });
@@ -113,13 +107,11 @@ export const generateCredibilityTask = task({
           1. Identitas Perusahaan
           2. Deskripsi Pekerjaan
           3. Gaya Bahasa
-          4. Red Flags - PENTING: Hanya sertakan reasoningPoints dengan type "red_flags" JIKA ada indikasi red flags yang ditemukan. Jika tidak ada red flags, KOSONGKAN array message type "red_flags".
-          5. Sumber Platform (opsional)
+          4. Sumber Platform (opsional)
 
           ATURAN KHUSUS untuk:
-          1. Red Flags
-          - Jika ada red flags yang ditemukan, sertakan object dengan type: "red_flags" dan message berisi daftar red flags
-          - Jika TIDAK ada red flags, KOSONGKAN array message type "red_flags"
+          1. Reasoning Point
+          - Sebutkan empat alasan singkat yang membuat lowongan tersebut KREDIBEL, MERAGUKAN, ataupun PENIPUAN
           2. Salary Estimation, sebutkan kira-kira range estimasi gaji berdasarkan:
           - Pengalaman yang dibutuhkan
           - Lokasi perusahaan
@@ -127,6 +119,7 @@ export const generateCredibilityTask = task({
           - Tipe kontrak
           - Job Description
           - Job Requirements
+          - Contoh output: IDR 8,000,000 - 15,000,000
           
 
           Output dalam format JSON:
@@ -144,13 +137,7 @@ export const generateCredibilityTask = task({
             credibility: {
               credibilityLabel: "KREDIBEL" | "MERAGUKAN" | "PENIPUAN",
               credibilityScore: number (0-100),
-              reasoningPoints: {
-                companyIdentity: string,
-                jobDescription: string,
-                languageStyle: string,
-                redFlags: string,
-                platformSources: string
-              }  
+              reasoningPoints: [string]  
             },
             assessmentSummary: string (menggunakan bahasa indonesia)
           }
