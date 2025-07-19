@@ -16,7 +16,7 @@ model User {
   password     String?        @db.VarChar(255) // Optional for OAuth users
   createdAt    DateTime       @default(now())
   cvs          CV[]
-  jobPostings  JobPosting[]
+  jobOpening  JobOpening[]
   profile      UserProfile?
 }
 
@@ -31,29 +31,30 @@ model CV {
   matches    CVJobMatch[]
 }
 
-model JobPosting {
-  id               String       @id @default(cuid())
-  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId           String
-  url              String?      @db.Text
-  title            String       @db.VarChar(255)
-  companyName      String       @db.VarChar(255)
-  description      String?      @db.Text
-  requirements     String?      @db.Text
-  credibilityScore Float?       @db.DoublePrecision
-  redFlags         Json?        @db.JsonB
-  createdAt        DateTime     @default(now())
+model JobOpening {
+  id               String           @id @default(cuid())
+  user             User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           String?
+  companyName      String?          @db.VarChar(255)
+  companyLocation  String?          @db.VarChar(255)
+  jobTitle         String?          @db.VarChar(255)
+  salaryEstimation String?          @db.VarChar(255)
+  contractType     String?          @db.VarChar(255)
+  workArrangement  String?          @db.VarChar(255)
+  jobDescription   String[]       
+  jobRequirements  String[]       
+  credibilityLabel String           @db.VarChar(255)
+  credibilityScore Float            @db.DoublePrecision
+  reasoningPoint   Json             @db.JsonB
+  createdAt        DateTime         @default(now())
   matches          CVJobMatch[]
-
-  // Prisma belum mendukung CHECK constraint, tambahkan manual jika perlu:
-  // @@check(credibilityScore >= 0 AND credibilityScore <= 100)
 }
 
 model CVJobMatch {
   id              String      @id @default(cuid())
   cv              CV          @relation(fields: [cvId], references: [id], onDelete: Cascade)
   cvId            String
-  jobPosting      JobPosting  @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+  jobOpening      JobOpening  @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
   jobPostingId    String
   matchingScore   Float       @db.DoublePrecision
   analysisSummary Json?       @db.JsonB
