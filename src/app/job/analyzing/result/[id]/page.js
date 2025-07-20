@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getLogUser } from "@/services/loguser";
 import { prisma } from "@/utils/prisma";
 import { TabsContent } from "@radix-ui/react-tabs";
 import {
@@ -19,6 +20,7 @@ import React from "react";
 
 export default async function Page({ params }) {
   const { id } = await params;
+  const logUser = await getLogUser(id);
 
   const jobOpening = await prisma.jobOpening.findUnique({
     where: {
@@ -33,6 +35,25 @@ export default async function Page({ params }) {
           <ArrowLeft className="text-neutral-600" />
         </Link>
         <p className="text-neutral-600">Hasil Evaluasi</p>
+        {logUser ? (
+          <form
+            action="/logout"
+            method="post"
+            className="flex items-center gap-4"
+          >
+            <p className="text-sm">Hello, {logUser.name}</p>
+            <button className="bg-red-500 text-white px-4 py-1 rounded">
+              Logout
+            </button>
+          </form>
+        ) : (
+          <a
+            href="/login"
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Login
+          </a>
+        )}
       </header>
       <main>
         <Card className="min-h-[185px] w-[673px] p-4">
