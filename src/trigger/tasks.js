@@ -6,7 +6,7 @@ import z from "zod";
 
 export const generateCredibilityTask = task({
   id: "generate-credibility",
-  maxDuration: 120,
+  maxDuration: 300,
   run: async (payload, { ctx }) => {
     const JobCredibilityResult = z.object({
       jobInformation: z.object({

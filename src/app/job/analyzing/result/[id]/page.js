@@ -1,3 +1,4 @@
+import { LogoutForm } from "@/app/_components/logform";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -36,16 +37,7 @@ export default async function Page({ params }) {
         </Link>
         <p className="text-neutral-600">Hasil Evaluasi</p>
         {logUser ? (
-          <form
-            action="/logout"
-            method="post"
-            className="flex items-center gap-4"
-          >
-            <p className="text-sm">Hello, {logUser.name}</p>
-            <button className="bg-red-500 text-white px-4 py-1 rounded">
-              Logout
-            </button>
-          </form>
+          <LogoutForm />
         ) : (
           <a
             href="/login"

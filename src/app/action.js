@@ -2,6 +2,18 @@
 
 import { generateCredibilityTask } from "@/trigger/tasks.js";
 
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+export async function logoutAction(_) {
+  const cookieStore = await cookies();
+
+  cookieStore.delete("userId");
+  console.log("test");
+  redirect("/");
+}
+
 export async function evaluateJobAction(_, formData) {
   const jobImages = formData.getAll("job-image");
 
