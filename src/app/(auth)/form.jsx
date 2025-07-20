@@ -28,9 +28,6 @@ export const RegisterForm = () => {
         <button disabled={pending} type="submit">
           Register
         </button>
-        {/* <button disabled={pending} type="submit">
-          Register Google
-        </button> */}
       </form>
     </div>
   );

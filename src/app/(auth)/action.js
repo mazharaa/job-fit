@@ -67,7 +67,11 @@ export async function loginAction(_, formData) {
     maxAge: 1000 * 30,
   });
 
-  redirect("/dashboard");
+  // const idPage = cookieStore.get("currentPageId")?.value;
+  // if (idPage) {
+  //   redirect(`/job/analyzing/result/${idPage}`);
+  // }
+  redirect("/");
 }
 
 export async function googleLoginAction() {

@@ -67,5 +67,9 @@ export async function GET(request) {
     );
   }
 
-  redirect("/dashboard");
+  // const idPage = cookieStore.get("currentPageId")?.value;
+  // if (idPage) {
+  //   redirect(`/job/analyzing/result/${idPage}`);
+  // }
+  redirect("/");
 }

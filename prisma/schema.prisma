@@ -8,15 +8,15 @@ datasource db {
 }
 
 model User {
-  id          String       @id @default(cuid())
-  name        String       @db.VarChar(100)
-  email       String       @unique @db.VarChar(255)
-  googleUid   String?      @unique @db.VarChar(255)
-  password    String?      @db.VarChar(255)
-  createdAt   DateTime     @default(now())
-  cvs         CV[]
-  jobPostings JobPosting[]
-  profile     UserProfile?
+  id         String       @id @default(cuid())
+  name       String       @db.VarChar(100)
+  email      String       @unique @db.VarChar(255)
+  googleUid  String?      @unique @db.VarChar(255)
+  password   String?      @db.VarChar(255)
+  createdAt  DateTime     @default(now())
+  cvs        CV[]
+  jobOpening JobOpening[]
+  profile    UserProfile?
 }
 
 model CV {
@@ -30,19 +30,24 @@ model CV {
   matches    CVJobMatch[]
 }
 
-model JobPosting {
+model JobOpening {
   id               String       @id @default(cuid())
-  userId           String
-  url              String?
-  title            String       @db.VarChar(255)
-  companyName      String       @db.VarChar(255)
-  description      String?
-  requirements     String?
-  credibilityScore Float?
-  redFlags         Json?
+  userId           String?
+  companyName      String?      @db.VarChar(255)
+  companyLocation  String?      @db.VarChar(255)
+  jobTitle         String?      @db.VarChar(255)
+  salaryEstimation String?      @db.VarChar(255)
+  contractType     String?      @db.VarChar(255)
+  workArrangement  String?      @db.VarChar(255)
+  jobDescription   String[]
+  jobRequirements  String[]
+  credibilityLabel String       @db.VarChar(255)
+  credibilityScore Float
   createdAt        DateTime     @default(now())
+  reasoningPoint   String[]
   matches          CVJobMatch[]
-  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user             User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
 }
 
 model CVJobMatch {
@@ -53,7 +58,8 @@ model CVJobMatch {
   analysisSummary Json?
   createdAt       DateTime   @default(now())
   cv              CV         @relation(fields: [cvId], references: [id], onDelete: Cascade)
-  jobPosting      JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+  jobOpening      JobOpening @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+
   feedback        Feedback?
 
   @@unique([cvId, jobPostingId])

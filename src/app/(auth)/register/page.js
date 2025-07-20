@@ -13,8 +13,10 @@ export default async function Page() {
       <div className="my-4 text-center text-sm text-gray-500">or</div>
       <SocialLogin />
       <div className="mt-4 text-sm text-center">
-        Already have an account?{" "}
-        <Link to="/" className="text-blue-600 hover:underline">
+
+        Already have an account?
+        <Link to="/login" className="text-blue-600 hover:underline">
+
           Login
         </Link>
       </div>

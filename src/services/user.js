@@ -1,4 +1,6 @@
-import prisma from "@/utils/prisma";
+
+import { prisma } from "@/utils/prisma";
+
 
 import { hashPassword } from "./auth";
 
