@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -9,78 +8,72 @@ datasource db {
 }
 
 model User {
-  id           String         @id @default(cuid())
-  name         String         @db.VarChar(100)
-  email        String         @unique @db.VarChar(255)
-  googleUid    String?        @unique @db.VarChar(255)
-  password     String?        @db.VarChar(255) // Optional for OAuth users
-  createdAt    DateTime       @default(now())
-  cvs          CV[]
-  jobPostings  JobPosting[]
-  profile      UserProfile?
+  id          String       @id @default(cuid())
+  name        String       @db.VarChar(100)
+  email       String       @unique @db.VarChar(255)
+  googleUid   String?      @unique @db.VarChar(255)
+  password    String?      @db.VarChar(255)
+  createdAt   DateTime     @default(now())
+  cvs         CV[]
+  jobPostings JobPosting[]
+  profile     UserProfile?
 }
 
 model CV {
   id         String       @id @default(cuid())
-  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
-  fileUrl    String       @db.Text
-  parsedText Json?        @db.JsonB
+  fileUrl    String
+  parsedText Json?
   isLatest   Boolean      @default(false)
   createdAt  DateTime     @default(now())
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   matches    CVJobMatch[]
 }
 
 model JobPosting {
   id               String       @id @default(cuid())
-  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId           String
-  url              String?      @db.Text
+  url              String?
   title            String       @db.VarChar(255)
   companyName      String       @db.VarChar(255)
-  description      String?      @db.Text
-  requirements     String?      @db.Text
-  credibilityScore Float?       @db.DoublePrecision
-  redFlags         Json?        @db.JsonB
+  description      String?
+  requirements     String?
+  credibilityScore Float?
+  redFlags         Json?
   createdAt        DateTime     @default(now())
   matches          CVJobMatch[]
-
-  // Prisma belum mendukung CHECK constraint, tambahkan manual jika perlu:
-  // @@check(credibilityScore >= 0 AND credibilityScore <= 100)
+  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model CVJobMatch {
-  id              String      @id @default(cuid())
-  cv              CV          @relation(fields: [cvId], references: [id], onDelete: Cascade)
+  id              String     @id @default(cuid())
   cvId            String
-  jobPosting      JobPosting  @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
   jobPostingId    String
-  matchingScore   Float       @db.DoublePrecision
-  analysisSummary Json?       @db.JsonB
-  createdAt       DateTime    @default(now())
+  matchingScore   Float
+  analysisSummary Json?
+  createdAt       DateTime   @default(now())
+  cv              CV         @relation(fields: [cvId], references: [id], onDelete: Cascade)
+  jobPosting      JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
   feedback        Feedback?
 
   @@unique([cvId, jobPostingId])
-
-  // Tambahkan manual di migration jika ingin enforce:
-  // CHECK (matchingScore >= 0 AND matchingScore <= 100)
 }
 
 model Feedback {
-  id               String      @id @default(cuid())
-  cvJobMatch       CVJobMatch  @relation(fields: [cvJobMatchId], references: [id], onDelete: Cascade)
-  cvJobMatchId     String      @unique
-  suggestions      Json?       @db.JsonB
-  highlightedAreas Json?       @db.JsonB
-  createdAt        DateTime    @default(now())
+  id               String     @id @default(cuid())
+  cvJobMatchId     String     @unique
+  suggestions      Json?
+  highlightedAreas Json?
+  createdAt        DateTime   @default(now())
+  cvJobMatch       CVJobMatch @relation(fields: [cvJobMatchId], references: [id], onDelete: Cascade)
 }
 
 model UserProfile {
-  id                String   @id @default(cuid())
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId            String   @unique
-  currentPosition   String?  @db.VarChar(255)
-  preferredPosition String?  @db.VarChar(255)
+  id                String    @id @default(cuid())
+  userId            String    @unique
+  currentPosition   String?   @db.VarChar(255)
+  preferredPosition String?   @db.VarChar(255)
   dob               DateTime?
-  createdAt         DateTime @default(now())
+  createdAt         DateTime  @default(now())
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

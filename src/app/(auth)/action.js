@@ -1,12 +1,12 @@
 "use server";
 
-import { prisma } from "@/utils/prisma";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 import { google } from "@/utils/arctic";
 import { createUser, getUserByEmail } from "@/services/user";
+import * as arctic from "arctic";
 
 export async function registerAction(_, formData) {
   const name = formData.get("name");
@@ -27,19 +27,18 @@ export async function loginAction(_, formData) {
   const email = formData.get("email");
   const password = formData.get("password");
   let user = null;
+  const getWithPassword = true;
 
   try {
-    user = await prisma.user.findFirst({
-      where: {
-        email,
-      },
-    });
+    user = await getUserByEmail(email, getWithPassword);
   } catch (error) {
+    console.log(error);
     return {
       status: "failed",
       message: "Error",
     };
   }
+  console.log(user);
 
   if (!user) {
     return {

@@ -30,7 +30,7 @@ export async function GET(request) {
 
     const existingUser = await getUserByEmail(userData.email);
     if (existingUser) {
-      cookieStore.set("userId", newSession.id, {
+      cookieStore.set("userId", existingUser.id, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         maxAge: 60 * 60 * 24 * 30,
@@ -44,8 +44,7 @@ export async function GET(request) {
           googleUid: userData.sub,
         },
       });
-      console.log(newUser);
-      cookieStore.set("userId", newSession.id, {
+      cookieStore.set("userId", newUser.id, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         maxAge: 60 * 60 * 24 * 30,

@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { RegisterForm } from "../form";
 import SocialLogin from "../_components/social-login";
-import { Link } from "@radix-ui/react-navigation-menu";
+import { Link } from "lucide-react";
 
 export default async function Page() {
   return (

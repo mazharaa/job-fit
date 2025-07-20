@@ -18,12 +18,14 @@ export const LogoutForm = () => {
 
   return (
     <div className="grid grid-cols-3 space-x-3">
-      <button
-        onClick={action}
-        className="text-sm text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600"
-      >
-        Logout
-      </button>
+      <form action={action}>
+        <button
+          type="submit"
+          className="text-sm text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600"
+        >
+          Logout
+        </button>
+      </form>
     </div>
   );
 };

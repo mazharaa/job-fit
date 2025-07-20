@@ -1,7 +1,6 @@
-import { Card } from "@/components/ui/card";
 import { LoginForm } from "../form";
 import SocialLogin from "../_components/social-login";
-import { Link } from "@radix-ui/react-navigation-menu";
+import { Link } from "lucide-react";
 
 export default async function Page() {
   return (
@@ -14,7 +13,7 @@ export default async function Page() {
 
       <SocialLogin />
       <div className="mt-4 text-sm text-center">
-        Don't have an account?{" "}
+        Don't have an account?
         <Link to="/register" className="text-blue-600 hover:underline">
           Register
         </Link>
