@@ -50,18 +50,32 @@ export const LoginForm = () => {
   }, [state]);
 
   return (
-    <div className="grid grid-cols-3 space-x-3">
-      <form className="space-y-2 col-span-2 p-4" action={action}>
-        <div>Login Acoount :</div>
-        <Input name="email" placeholder="Email" type="email" />
-        <Input name="password" placeholder="Password" type="password" />
-        <button disabled={pending} type="submit">
-          Login
-        </button>
-        {/* <button disabled={pending} type="submit">
-          Login Google
-        </button> */}
-      </form>
-    </div>
+    <form className="space-y-4" action={action}>
+      <div>
+        <label className="block text-sm font-medium mb-1">Email</label>
+        <input
+          name="email"
+          placeholder="Email"
+          type="email"
+          className="w-full border px-3 py-2 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Password</label>
+        <input
+          name="password"
+          placeholder="Password"
+          type="password"
+          className="w-full border px-3 py-2 rounded"
+        />
+      </div>
+      <button
+        disabled={pending}
+        type="submit"
+        className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        Login
+      </button>
+    </form>
   );
 };

@@ -18,9 +18,12 @@ export const LogoutForm = () => {
 
   return (
     <div className="grid grid-cols-3 space-x-3">
-      <form className="space-y-2 col-span-2 p-4" action={action}>
-        <button>Logout</button>
-      </form>
+      <button
+        onClick={action}
+        className="text-sm text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600"
+      >
+        Logout
+      </button>
     </div>
   );
 };
