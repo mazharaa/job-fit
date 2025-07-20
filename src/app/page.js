@@ -1,3 +1,4 @@
+
 "use client";
 
 import { ProcessingPage } from "./_components/processingPage";
@@ -70,5 +71,6 @@ export default function Page() {
         </p>
       </div>
     </main>
+
   );
 }

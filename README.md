@@ -2,13 +2,15 @@
 
 To run on local
 
-First, install the package
+1. Create .env file that contain DATABASE_URL, you can get it on Neon dashboard -> connect -> .env tab
+
+2. install the package
 
 ```bash
 bun i
 ```
 
-Second, run the development server:
+3. Second, run the development server:
 
 ```bash
 bun dev
